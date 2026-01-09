@@ -209,19 +209,6 @@ Yolo::createEngine(nvinfer1::IBuilder* builder)
     // Fallback for TensorRT 7 (JetPack 4.5.1)
     nvinfer1::ICudaEngine* engine = builder->buildEngineWithConfig(*network, *config);
 #endif
-    
-  if (engine) {
-    std::cout << "Building complete\n" << std::endl;
-  }
-  else {
-    std::cerr << "Building engine failed\n" << std::endl;
-  }
-
-#if NV_TENSORRT_MAJOR >= 8
-  delete serializedEngine;
-#else
-  serializedEngine->destroy();
-#endif
 
 #ifdef GRAPH
   nvinfer1::IExecutionContext *context = engine->createExecutionContext();
